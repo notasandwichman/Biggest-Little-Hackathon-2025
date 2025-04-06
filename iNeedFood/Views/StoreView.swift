@@ -40,7 +40,7 @@ struct StoreView: View {
                             }
                         }
                         .padding(.top)
-                        NavigationLink(destination:MapView()){
+                        NavigationLink(destination:StoreMapView(storeID: store.id)){
                             Text("Find on Map")
                                 .foregroundColor(.blue)
                         }

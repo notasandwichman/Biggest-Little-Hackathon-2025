@@ -18,7 +18,6 @@ struct StoreMapView: View {
         span: MKCoordinateSpan(latitudeDelta: 0.001, longitudeDelta: 0.001)
     )
     
-    
     var body: some View {
         VStack {
             if let store = viewModel.store {
@@ -40,7 +39,8 @@ struct StoreMapView: View {
                         }
                 }
                 .ignoresSafeArea(.all)
-                .mapStyle(.standard(pointsOfInterest: .excludingAll))
+                .mapStyle(.standard(elevation: .realistic, pointsOfInterest: .excluding(
+                    [.restaurant, .bank, .atm, .store, .cafe, .evCharger, .police, .parking, .theater, .nightlife, .museum])))
                 .onAppear{
                     region.center = CLLocationCoordinate2D(
                         latitude: store.latitude,
@@ -48,6 +48,7 @@ struct StoreMapView: View {
                 }
             }
         }
+        .padding(.top, 1)
         .onAppear {
             viewModel.fetchStore(by: storeID)
         }
