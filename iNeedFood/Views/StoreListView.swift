@@ -37,6 +37,8 @@ struct StoreListView: View {
                         }
                     }
                     .padding(.vertical)
+                    .navigationTitle("Back to List")
+                    .navigationBarHidden(true)
                 }
                 .listStyle(PlainListStyle())
             } else if let errorMessage = viewModel.errorMessage {

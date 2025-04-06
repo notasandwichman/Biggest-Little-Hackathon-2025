@@ -44,6 +44,8 @@ struct StoreView: View {
                             Text("Find on Map")
                                 .foregroundColor(.blue)
                         }
+                        .navigationTitle("Back to Store")
+                        .navigationBarHidden(true)
                         if itemModel.isLoading {
                             ProgressView("Loading Items...")
                         } else if !itemModel.items.isEmpty {

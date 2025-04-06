@@ -7,12 +7,15 @@
 
 import SwiftUI
 import MapKit
+import CoreLocation
 
 struct MapView: View {
+    @State private var pos = MapCameraPosition.userLocation(fallback: .automatic)
+    
     @StateObject private var viewModel = StoreViewModel()
     @State private var region = MKCoordinateRegion(
-        center: CLLocationCoordinate2D(latitude: 39.54371380605513, longitude: -119.8154357161432), //Relative center of UNR
-        span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
+        center: CLLocationCoordinate2D(latitude: 39.54355928066485,  longitude: -119.81594713282051), //Relative center of UNR
+        span: MKCoordinateSpan(latitudeDelta: 0.002, longitudeDelta: 0.002))
     
     var body: some View {
         NavigationView {
@@ -28,6 +31,8 @@ struct MapView: View {
                                 .foregroundColor(.primary)
                         }
                     }
+                    .navigationTitle("Back to Map")
+                    .navigationBarHidden(true)
                 }
             }
             .ignoresSafeArea(.all)
