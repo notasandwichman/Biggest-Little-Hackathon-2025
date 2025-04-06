@@ -62,6 +62,7 @@
 		BADDA2862DA1E03700394918 /* ItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemViewModel.swift; sourceTree = "<group>"; };
 		BADDA28A2DA1EB0700394918 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		BADDA28C2DA265D900394918 /* StoreMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreMapView.swift; sourceTree = "<group>"; };
+		BADDA28E2DA297AF00394918 /* default.csv */ = {isa = PBXFileReference; lastKnownFileType = text; path = default.csv; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,6 +121,7 @@
 				BA9E1CA72DA0E04A00CC6B67 /* iNeedFood.entitlements */,
 				BA9E1CA82DA0E04A00CC6B67 /* Info.plist */,
 				BA9E1CA42DA0E04A00CC6B67 /* Preview Content */,
+				BADDA28E2DA297AF00394918 /* default.csv */,
 			);
 			path = iNeedFood;
 			sourceTree = "<group>";

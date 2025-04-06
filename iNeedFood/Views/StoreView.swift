@@ -56,7 +56,7 @@ struct StoreView: View {
                                     Text(item.name).font(.title3)
                                     HStack {
                                         Text("Calories: \(item.calories) |")
-                                        Text("$\(item.cost.formatted())")
+                                        Text("$\(String(format: "%.2f", item.cost))")
                                     }
                                     let ratio = String(format: "%.2f", Float(item.calories)/item.cost)
                                     Text("Calories/Dollar: \(ratio) cal")

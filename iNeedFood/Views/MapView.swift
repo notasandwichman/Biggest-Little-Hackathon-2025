@@ -38,8 +38,8 @@ struct MapView: View {
                         .navigationBarHidden(true)
                     }
                 }
-                .ignoresSafeArea(.all)
-                .mapStyle(.standard(pointsOfInterest: .excludingAll))
+                .ignoresSafeArea(.all, edges: .top)
+                .mapStyle(.standard(pointsOfInterest: .excludingAll, showsTraffic: false))
                 
                 LocationButton(locationManager: locationManager, region: $region)
                 
