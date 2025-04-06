@@ -15,15 +15,15 @@ struct StoreMapView: View {
     @StateObject private var viewModel = StoreViewModel()
     @State private var region = MKCoordinateRegion(
         center: CLLocationCoordinate2D(latitude: 0, longitude: 0),
-        span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
+        span: MKCoordinateSpan(latitudeDelta: 0.001, longitudeDelta: 0.001)
     )
+    
     
     var body: some View {
         VStack {
             if let store = viewModel.store {
                 Map(
                 coordinateRegion: $region,
-                showsUserLocation: true,
                 annotationItems: [store])
                 { store in
                     MapAnnotation(coordinate: CLLocationCoordinate2D(
