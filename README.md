@@ -1,6 +1,6 @@
 # iNeedFood
 ## Henry Dalton
-This is my submission for the Biggest Little Hackathon 2025 at UNR for the App Category
+#### This is my submission for the Biggest Little Hackathon 2025 at UNR for the App Category
 
 This application is intended to provide broke college students (like myself) with an easier way of seeing how to get the most food for their dollar.
 
