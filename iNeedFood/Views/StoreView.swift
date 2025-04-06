@@ -9,10 +9,9 @@ import SwiftUI
 
 struct StoreView: View {
     @StateObject private var viewModel = StoreViewModel()
+    @StateObject private var itemModel = ItemViewModel()
     
     let storeID: Int
-    
-    @StateObject private var itemModel = ItemViewModel()
     
     var body: some View {
         NavigationView{
@@ -28,14 +27,20 @@ struct StoreView: View {
                                 .scaledToFit()
                                 .frame(width:50)
                             
-                            VStack {
+                            VStack (alignment:.leading){
                                 Text("\(store.name)").font(.largeTitle)
                                 let totCal = itemModel.items.reduce(0) { $0 + $1.calories }
                                 let totCost = itemModel.items.reduce(0.0) { $0 + $1.cost }
+                                let mealOptionals = itemModel.items.filter { $0.meal == 1 }
+                                let mealAbsolutes = itemModel.items.filter { $0.meal == 0 }.reduce(0) { $0 + $1.calories }
+                                let mealTot = mealOptionals.count > 0 ? (mealOptionals.reduce(0) { $0 + $1.calories }/mealOptionals.count) + mealAbsolutes : 0 + mealAbsolutes
+                                
                                 
                                 let avgCalPerCost = totCost > 0 ? Float(totCal)/Float(totCost) : 0
                                 
-                                Text("Avg. Cal/$: \(String(format: "%.2f", avgCalPerCost)) cal")
+                                Text("Avg. Cal/$: \(String(format: "%.2f", avgCalPerCost)) Calories")
+                                    .font(.title3)
+                                Text("Avg. Meal Trade: \(mealTot) Calories")
                                     .font(.title3)
                             }
                         }
@@ -53,13 +58,16 @@ struct StoreView: View {
                             List(itemModel.items, id:\.id) {
                                 item in
                                 VStack (alignment: .leading) {
-                                    Text(item.name).font(.title3)
-                                    HStack {
-                                        Text("Calories: \(item.calories) |")
-                                        Text("$\(String(format: "%.2f", item.cost))")
+                                    HStack (alignment: .center){
+                                        Text("\(item.name) ").font(.title2).bold(true)
+                                        Spacer()
+                                        Text("$\(String(format: "%.2f", item.cost))").font(.title2)
                                     }
-                                    let ratio = String(format: "%.2f", Float(item.calories)/item.cost)
-                                    Text("Calories/Dollar: \(ratio) cal")
+                                    HStack {
+                                        let ratio = String(format: "%.2f", Float(item.calories)/item.cost)
+                                        Text("Calories: \(item.calories) - Cal/$: \(ratio) Calories")
+                                            .font(.title3)
+                                    }
                                 }
                             }
                             .listStyle(PlainListStyle())
