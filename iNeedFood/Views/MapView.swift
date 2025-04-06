@@ -32,6 +32,7 @@ struct MapView: View {
                                 Text(store.name)
                                     .font(.caption)
                                     .foregroundColor(.primary)
+                                    .padding(.top, -20)
                             }
                         }
                         .navigationTitle("Back to Map")
