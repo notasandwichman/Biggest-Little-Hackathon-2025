@@ -15,52 +15,65 @@ struct StoreView: View {
     @StateObject private var itemModel = ItemViewModel()
     
     var body: some View {
-        VStack {
-            if viewModel.isLoading {
-                ProgressView("Loading Store...")
-            } else if let store = viewModel.store {
-                VStack {
-                    Text("\(store.name)").font(.largeTitle)
-                    
-                    let totCal = itemModel.items.reduce(0) { $0 + $1.calories }
-                    let totCost = itemModel.items.reduce(0.0) { $0 + $1.cost }
-                    
-                    let avgCalPerCost = totCost > 0 ? Float(totCal)/Float(totCost) : 0
-                    
-                    Text("Avg. Cal/$: \(String(format: "%.2f", avgCalPerCost)) cal")
-                        .font(.title3)
-                        .padding(.top, 5)
-                    
-                    if itemModel.isLoading {
-                        ProgressView("Loading Items...")
-                    } else if !itemModel.items.isEmpty {
-                        List(itemModel.items, id:\.id) {
-                            item in
-                            VStack (alignment: .leading) {
-                                Text(item.name).font(.title3)
-                                HStack {
-                                    Text("Calories: \(item.calories) |")
-                                    Text("$\(item.cost.formatted())")
-                                }
-                                let ratio = String(format: "%.2f", Float(item.calories)/item.cost)
-                                Text("Calories/Dollar: \(ratio) cal")
+        NavigationView{
+            VStack {
+                if viewModel.isLoading {
+                    ProgressView("Loading Store...")
+                } else if let store = viewModel.store {
+                    VStack {
+                        
+                        HStack {
+                            Image("\(store.id)")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width:50)
+                            
+                            VStack {
+                                Text("\(store.name)").font(.largeTitle)
+                                let totCal = itemModel.items.reduce(0) { $0 + $1.calories }
+                                let totCost = itemModel.items.reduce(0.0) { $0 + $1.cost }
+                                
+                                let avgCalPerCost = totCost > 0 ? Float(totCal)/Float(totCost) : 0
+                                
+                                Text("Avg. Cal/$: \(String(format: "%.2f", avgCalPerCost)) cal")
+                                    .font(.title3)
                             }
                         }
-                        .listStyle(PlainListStyle())
+                        .padding(.top)
+                        NavigationLink(destination:MapView()){
+                            Text("Find on Map")
+                                .foregroundColor(.blue)
+                        }
+                        if itemModel.isLoading {
+                            ProgressView("Loading Items...")
+                        } else if !itemModel.items.isEmpty {
+                            
+                            List(itemModel.items, id:\.id) {
+                                item in
+                                VStack (alignment: .leading) {
+                                    Text(item.name).font(.title3)
+                                    HStack {
+                                        Text("Calories: \(item.calories) |")
+                                        Text("$\(item.cost.formatted())")
+                                    }
+                                    let ratio = String(format: "%.2f", Float(item.calories)/item.cost)
+                                    Text("Calories/Dollar: \(ratio) cal")
+                                }
+                            }
+                            .listStyle(PlainListStyle())
+                        }
+                    }
+                    .onAppear {
+                        itemModel.fetchItems(by: storeID)
                     }
                     
-                    Spacer()
+                } else if let errorMessage = viewModel.errorMessage {
+                    Text(errorMessage)
+                        .foregroundColor(.red)
                 }
-                .onAppear {
-                    itemModel.fetchItems(by: storeID)
-                }
-                
-            } else if let errorMessage = viewModel.errorMessage {
-                Text(errorMessage)
-                    .foregroundColor(.red)
             }
         }
-        .padding()
+        
         .onAppear {
             viewModel.fetchStore(by: storeID)
         }

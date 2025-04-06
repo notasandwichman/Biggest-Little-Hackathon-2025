@@ -10,7 +10,9 @@ import MapKit
 
 struct MapView: View {
     @StateObject private var viewModel = StoreViewModel()
-    @State private var region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 39.54371380605513, longitude: -119.8154357161432), span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
+    @State private var region = MKCoordinateRegion(
+        center: CLLocationCoordinate2D(latitude: 39.54371380605513, longitude: -119.8154357161432), //Relative center of UNR
+        span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
     
     var body: some View {
         NavigationView {
