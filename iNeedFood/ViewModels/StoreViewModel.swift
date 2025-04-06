@@ -37,7 +37,6 @@ class StoreViewModel: ObservableObject {
         DispatchQueue.global().async {
             DispatchQueue.main.async {
                 if let fetchedStores = DatabaseManager.shared.getAllStores() {
-                    print("Fetched stores: \(fetchedStores)")
                     self.stores = fetchedStores
                 } else {
                     self.errorMessage = "Failed to fetch stores."

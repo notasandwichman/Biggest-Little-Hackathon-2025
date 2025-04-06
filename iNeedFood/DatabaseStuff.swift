@@ -10,11 +10,14 @@ import Foundation
 import SQLite3
 
 //Local models for handling database info
-struct Store {
+struct Store: Identifiable {
     let id: Int
     let name: String
+    let location: String
+    let latitude: Double
+    let longitude: Double
 }
-
+    
 struct Item {
     let id: Int
     let name:String
@@ -29,7 +32,6 @@ final class DatabaseManager {
     private var db: OpaquePointer?
     //init function
     private init() {
-        copyDBifNeeded()
         openDB()
     }
     
@@ -37,43 +39,16 @@ final class DatabaseManager {
     
     private let dbName = "UNR.db"
     
-    private var docsURL: URL {
-        FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-    }
+    //open and close functions
     
-    private var dbURL: URL {
-        docsURL.appendingPathComponent(dbName)
-    }
-    
-    private var dbPath: String {
-        dbURL.path
-    }
-    
-    //setup functions
-    
-    private func copyDBifNeeded() {
-        let fileManager = FileManager.default
-        
+    private func openDB() {
         guard let bundleURL = Bundle.main.url(forResource: "UNR", withExtension: "db")
         else {
             print("UNR.db not found in assets")
             return
         }
+        let dbPath = bundleURL.path
         
-        if !fileManager.fileExists(atPath: dbPath) {
-            do {
-                try fileManager.copyItem(at: bundleURL, to: dbURL)
-                print("Database copied to documents directory")
-            } catch {
-                print("Error copying database: \(error)")
-            }
-        }
-        else {
-            print("Database already exists at destination")
-        }
-    }
-    
-    private func openDB() {
         if sqlite3_open(dbPath, &db) == SQLITE_OK {
             print ("Successfully opened database at \(dbPath)")
         } else {
@@ -99,9 +74,12 @@ final class DatabaseManager {
             if sqlite3_step(statement) == SQLITE_ROW {
                 let storeID = Int(sqlite3_column_int(statement, 0))
                 let storeName = String(cString: sqlite3_column_text(statement, 1))
+                let storeLocation = String(cString: sqlite3_column_text(statement, 2))
+                let storeLat = sqlite3_column_double(statement, 3)
+                let storeLong = sqlite3_column_double(statement, 4)
                 
                 sqlite3_finalize(statement)
-                return Store(id: storeID, name: storeName)
+                return Store(id: storeID, name: storeName, location: storeLocation, latitude: storeLat, longitude: storeLong)
             }
         }
         
@@ -115,20 +93,21 @@ final class DatabaseManager {
         var statement: OpaquePointer?
         
         if sqlite3_prepare_v2(db, query, -1, &statement, nil) == SQLITE_OK {
-            while sqlite3_step(statement) != SQLITE_DONE {
+            while sqlite3_step(statement) == SQLITE_ROW {
                 let storeID = Int(sqlite3_column_int(statement, 0))
                 let storeName = String(cString: sqlite3_column_text(statement, 1))
+                let storeLocation = String(cString: sqlite3_column_text(statement, 2))
+                let storeLat = sqlite3_column_double(statement, 3)
+                let storeLong = sqlite3_column_double(statement, 4)
                 
-                stores.append(Store(id: storeID, name: storeName))
+                let store = Store(id: storeID, name: storeName, location: storeLocation, latitude: storeLat, longitude: storeLong)
+                stores.append(store)
             }
             
-            sqlite3_finalize(statement)
-            print("Queried Stores: \(stores)")
-            return stores
         }
         
         sqlite3_finalize(statement)
-        return nil
+        return stores
     }
     
     //Items

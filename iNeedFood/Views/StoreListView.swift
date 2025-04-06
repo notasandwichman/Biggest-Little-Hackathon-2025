@@ -9,6 +9,7 @@ import SwiftUI
 
 struct StoreListView: View {
     @StateObject private var viewModel = StoreViewModel()
+    @StateObject private var itemModel = ItemViewModel()
     
     var body: some View {
         //Store List
@@ -19,12 +20,23 @@ struct StoreListView: View {
                 List (viewModel.stores, id: \.id) {
                     store in
                     NavigationLink(destination: StoreView(storeID: store.id)){
-                        Text(store.name)
+                        HStack {
+                            VStack (alignment: .leading) {
+                                Text(store.name)
+                                    .font(.title)
+                                Text(store.location)
+                                    .font(.subheadline)
+                            }
+                            Spacer()
+                            Image("\(store.id)")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(height: 60)
+                        }
                     }
-                    .padding(.vertical, 5)
+                    .padding(.vertical)
                 }
-                .padding()
-                .navigationTitle("Stores")
+                .listStyle(PlainListStyle())
             } else if let errorMessage = viewModel.errorMessage {
                 Text(errorMessage)
                     .foregroundColor(.red)
@@ -33,7 +45,9 @@ struct StoreListView: View {
         .onAppear{
             viewModel.fetchAllStores()
         }
-        .padding()
-        Spacer()
+        
     }
+}
+#Preview {
+    StoreListView()
 }

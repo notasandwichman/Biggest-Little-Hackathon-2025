@@ -19,6 +19,8 @@
 		BADDA2812DA1C5D800394918 /* StoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BADDA2802DA1C5D800394918 /* StoreView.swift */; };
 		BADDA2832DA1C84900394918 /* UNR.db in Resources */ = {isa = PBXBuildFile; fileRef = BADDA2822DA1C84900394918 /* UNR.db */; };
 		BADDA2852DA1CBAA00394918 /* StoreListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BADDA2842DA1CBAA00394918 /* StoreListView.swift */; };
+		BADDA2872DA1E03700394918 /* ItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BADDA2862DA1E03700394918 /* ItemViewModel.swift */; };
+		BADDA28B2DA1EB0700394918 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BADDA28A2DA1EB0700394918 /* MapView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +58,8 @@
 		BADDA2802DA1C5D800394918 /* StoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreView.swift; sourceTree = "<group>"; };
 		BADDA2822DA1C84900394918 /* UNR.db */ = {isa = PBXFileReference; lastKnownFileType = file; name = UNR.db; path = iNeedFood/Resources/UNR.db; sourceTree = SOURCE_ROOT; };
 		BADDA2842DA1CBAA00394918 /* StoreListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreListView.swift; sourceTree = "<group>"; };
+		BADDA2862DA1E03700394918 /* ItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemViewModel.swift; sourceTree = "<group>"; };
+		BADDA28A2DA1EB0700394918 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -147,6 +151,7 @@
 			isa = PBXGroup;
 			children = (
 				BA9E1C9E2DA0E04800CC6B67 /* DefaultView.swift */,
+				BADDA28A2DA1EB0700394918 /* MapView.swift */,
 				BADDA2802DA1C5D800394918 /* StoreView.swift */,
 				BADDA2842DA1CBAA00394918 /* StoreListView.swift */,
 			);
@@ -157,6 +162,7 @@
 			isa = PBXGroup;
 			children = (
 				BADDA27E2DA1C07700394918 /* StoreViewModel.swift */,
+				BADDA2862DA1E03700394918 /* ItemViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -302,8 +308,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				BADDA27F2DA1C07700394918 /* StoreViewModel.swift in Sources */,
+				BADDA28B2DA1EB0700394918 /* MapView.swift in Sources */,
 				BA9E1C9F2DA0E04800CC6B67 /* DefaultView.swift in Sources */,
 				BADDA2852DA1CBAA00394918 /* StoreListView.swift in Sources */,
+				BADDA2872DA1E03700394918 /* ItemViewModel.swift in Sources */,
 				BA9E1CCD2DA1005700CC6B67 /* DatabaseStuff.swift in Sources */,
 				BADDA2812DA1C5D800394918 /* StoreView.swift in Sources */,
 				BA9E1C9D2DA0E04800CC6B67 /* iNeedFoodApp.swift in Sources */,
