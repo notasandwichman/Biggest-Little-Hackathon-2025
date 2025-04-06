@@ -17,7 +17,13 @@ struct iNeedFoodApp: App {
     
     var body: some Scene {
         WindowGroup {
-            DefaultView()
+            if !DatabaseManager.shared.isLoading{
+                DefaultView()
+            } else {
+                ProgressView()
+                    .progressViewStyle(CircularProgressViewStyle(tint: .blue))
+                    .scaleEffect(2)
+            }
         }
     }
 }

@@ -29,6 +29,7 @@ struct Item {
 
 final class DatabaseManager {
     //class variables
+    @Published var isLoading: Bool = false
     static let shared = DatabaseManager()
     private var db: OpaquePointer?
     //init function
@@ -43,9 +44,11 @@ final class DatabaseManager {
     //open and close functions
     
     private func openDB() {
+        isLoading = true
         guard let bundleURL = Bundle.main.url(forResource: "UNR", withExtension: "db")
         else {
             print("UNR.db not found in assets")
+            self.isLoading = false
             return
         }
         let dbPath = bundleURL.path
@@ -55,6 +58,7 @@ final class DatabaseManager {
         } else {
             print ("Unable to open database.")
         }
+        self.isLoading = false
     }
     
     func closeDB() {
