@@ -13,7 +13,7 @@ struct iNeedFoodApp: App {
     init(){
         _ = DatabaseManager.shared
     }
-    
+    //To commit to the right github
     
     var body: some Scene {
         WindowGroup {
