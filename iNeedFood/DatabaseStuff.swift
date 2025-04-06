@@ -19,12 +19,13 @@ struct Store: Identifiable {
     let floor: String
 }
     
-struct Item {
+struct Item: Identifiable {
     let id: Int
     let name:String
     let calories: Int
     let cost: Float
     let storeID: Int
+    let meal: Int
 }
 
 final class DatabaseManager {
@@ -120,7 +121,7 @@ final class DatabaseManager {
     //Items
     func getItemsByStore (by storeID: Int) -> [Item]? {
         var items: [Item] = []
-        let query = "SELECT * FROM Item WHERE store_id = ?;"
+        var query = "SELECT * FROM Item WHERE store_id = ?;"
         var statement: OpaquePointer?
         
         if sqlite3_prepare_v2(db, query, -1, &statement, nil) == SQLITE_OK {
@@ -132,8 +133,9 @@ final class DatabaseManager {
                 let itemCal = Int(sqlite3_column_int(statement, 2))
                 let itemCost = Float(sqlite3_column_double(statement, 3))
                 let storeID = Int(sqlite3_column_int(statement, 4))
+                let mealTrade = Int(sqlite3_column_int(statement, 5))
                 
-                items.append(Item(id: itemID, name: itemName, calories: itemCal, cost: itemCost, storeID: storeID))
+                items.append(Item(id: itemID, name: itemName, calories: itemCal, cost: itemCost, storeID: storeID, meal: mealTrade))
             }
             
             sqlite3_finalize(statement)
