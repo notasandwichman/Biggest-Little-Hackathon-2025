@@ -26,6 +26,8 @@ struct StoreListView: View {
                                     .font(.title)
                                 Text(store.location)
                                     .font(.subheadline)
+                                Text("\(store.floor) Floor")
+                                    .font(.caption)
                             }
                             Spacer()
                             Image("\(store.id)")

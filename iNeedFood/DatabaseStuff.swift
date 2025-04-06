@@ -16,6 +16,7 @@ struct Store: Identifiable {
     let location: String
     let latitude: Double
     let longitude: Double
+    let floor: String
 }
     
 struct Item {
@@ -77,9 +78,10 @@ final class DatabaseManager {
                 let storeLocation = String(cString: sqlite3_column_text(statement, 2))
                 let storeLat = sqlite3_column_double(statement, 3)
                 let storeLong = sqlite3_column_double(statement, 4)
+                let storeFloor = String(cString: sqlite3_column_text(statement, 5))
                 
                 sqlite3_finalize(statement)
-                return Store(id: storeID, name: storeName, location: storeLocation, latitude: storeLat, longitude: storeLong)
+                return Store(id: storeID, name: storeName, location: storeLocation, latitude: storeLat, longitude: storeLong, floor: storeFloor)
             }
         }
         
@@ -99,8 +101,9 @@ final class DatabaseManager {
                 let storeLocation = String(cString: sqlite3_column_text(statement, 2))
                 let storeLat = sqlite3_column_double(statement, 3)
                 let storeLong = sqlite3_column_double(statement, 4)
+                let storeFloor = String(cString: sqlite3_column_text(statement, 5))
                 
-                let store = Store(id: storeID, name: storeName, location: storeLocation, latitude: storeLat, longitude: storeLong)
+                let store = Store(id: storeID, name: storeName, location: storeLocation, latitude: storeLat, longitude: storeLong, floor: storeFloor)
                 stores.append(store)
             }
             

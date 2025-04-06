@@ -13,21 +13,26 @@ struct MapView: View {
     @State private var region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 39.54371380605513, longitude: -119.8154357161432), span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
     
     var body: some View {
-        Map(coordinateRegion: $region, showsUserLocation: true, annotationItems: viewModel.stores) { store in
-            MapAnnotation(coordinate: CLLocationCoordinate2D(latitude: store.latitude, longitude: store.longitude), content: {
-                VStack {
-                    Image(systemName: "takeoutbag.and.cup.and.straw.fill")
-                        .foregroundColor(.blue)
-                        .frame(width:45, height: 45)
-                    Text(store.name)
-                        .font(.caption)
-                        .foregroundColor(.black)
+        NavigationView {
+            Map(coordinateRegion: $region, showsUserLocation: true, annotationItems: viewModel.stores) { store in
+                MapAnnotation(coordinate: CLLocationCoordinate2D(latitude: store.latitude, longitude: store.longitude)) {
+                    NavigationLink(destination: StoreView(storeID: store.id)) {
+                        VStack {
+                            Image(systemName: "takeoutbag.and.cup.and.straw.fill")
+                                .foregroundColor(.blue)
+                                .frame(width:45, height: 45)
+                            Text(store.name)
+                                .font(.caption)
+                                .foregroundColor(.primary)
+                        }
+                    }
                 }
-            })
-        }
-//        .mapStyle(.standard(pointsOfInterest: .excludingAll))
-        .onAppear {
-            viewModel.fetchAllStores()
+            }
+            .ignoresSafeArea(.all)
+            .mapStyle(.standard(pointsOfInterest: .excludingAll))
+            .onAppear {
+                viewModel.fetchAllStores()
+            }
         }
     }
 }
